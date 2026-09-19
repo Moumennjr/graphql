@@ -145,15 +145,15 @@ function App() {
   // =========================
 
   return (
-    <>
+    <div className="app">
       {/* =========================
           ALL USERS
       ========================= */}
 
-      <h1>Users:</h1>
+      <h1 className="title">Users:</h1>
 
       {createdUser && (
-        <div style={{ border: "1px solid green", padding: "8px", marginBottom: "12px" }}>
+        <div className="created-user">
           <strong>Just created:</strong>
           <p>Name: {createdUser.name}</p>
           <p>Age: {createdUser.age}</p>
@@ -161,20 +161,22 @@ function App() {
         </div>
       )}
 
-      <div>
+      <div className="users-grid">
         {getUsersLoading ? (
-          <p>Data loading...</p>
+          <p className="message">Data loading...</p>
         ) : getUsersError ? (
-          <p>Error: {getUsersError.message}</p>
+          <p className="message error">Error: {getUsersError.message}</p>
         ) : (
           getUsersData?.getUsers.map((user) => (
-            <div key={user.id}>
-              <p>Name: {user.name}</p>
+            <div className="user-card" key={user.id}>
+              <span className="user-card__badge">
+                {user.id}
+              </span>
+              <p className="user-card__name">{user.name}</p>
 
-              <p>Age: {user.age}</p>
+              <p className="user-card__age">Age: {user.age}</p>
 
-              <p>
-                Civil situation:{" "}
+              <p className="user-card__status">
                 {user.isMarried ? "Married" : "Single"}
               </p>
             </div>
@@ -186,26 +188,28 @@ function App() {
           USER BY ID
       ========================= */}
 
-      <h1>The chosen user:</h1>
+      <h1 className="title">The chosen user:</h1>
 
       <div>
         {getUserByIdLoading ? (
-          <p>Data loading...</p>
+          <p className="message">Data loading...</p>
         ) : getUserByIdError ? (
-          <p>Error: {getUserByIdError.message}</p>
+          <p className="message error">Error: {getUserByIdError.message}</p>
         ) : (
           getUserByIdData?.getUserById && (
-            <div>
-              <p>
-                Name: {getUserByIdData.getUserById.name}
+            <div className="user-card">
+              <span className="user-card__badge">
+                {getUserByIdData.getUserById.id}
+              </span>
+              <p className="user-card__name">
+                {getUserByIdData.getUserById.name}
               </p>
 
-              <p>
+              <p className="user-card__age">
                 Age: {getUserByIdData.getUserById.age}
               </p>
 
-              <p>
-                Civil situation:{" "}
+              <p className="user-card__status">
                 {getUserByIdData.getUserById.isMarried
                   ? "Married"
                   : "Single"}
@@ -219,9 +223,9 @@ function App() {
           CREATE USER FORM
       ========================= */}
 
-      <h1>Create a user:</h1>
+      <h1 className="title">Create a user:</h1>
 
-      <div>
+      <div className="form">
         {/* NAME */}
 
         <input
@@ -230,6 +234,7 @@ function App() {
           placeholder="Enter your name"
           value={newUser.name}
           onChange={handleChange}
+          className="form__input"
         />
 
         {/* AGE */}
@@ -240,45 +245,46 @@ function App() {
           placeholder="Enter your age"
           value={newUser.age ?? ""}
           onChange={handleChange}
+          className="form__input"
         />
 
         {/* MARRIED */}
 
-        <label htmlFor="married">
-          Married
-        </label>
+        <div className="form__radio-group">
+          <label htmlFor="married">
+            <input
+              type="radio"
+              name="isMarried"
+              id="married"
+              value="true"
+              checked={newUser.isMarried === true}
+              onChange={handleChange}
+            />
+            Married
+          </label>
 
-        <input
-          type="radio"
-          name="isMarried"
-          id="married"
-          value="true"
-          checked={newUser.isMarried === true}
-          onChange={handleChange}
-        />
+          {/* SINGLE */}
 
-        {/* SINGLE */}
-
-        <label htmlFor="single">
-          Single
-        </label>
-
-        <input
-          type="radio"
-          name="isMarried"
-          id="single"
-          value="false"
-          checked={newUser.isMarried === false}
-          onChange={handleChange}
-        />
+          <label htmlFor="single">
+            <input
+              type="radio"
+              name="isMarried"
+              id="single"
+              value="false"
+              checked={newUser.isMarried === false}
+              onChange={handleChange}
+            />
+            Single
+          </label>
+        </div>
 
         {/* CREATE BUTTON */}
 
-        <button onClick={handleCreateUser}>
+        <button onClick={handleCreateUser} className="form__button">
           Create the user
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
