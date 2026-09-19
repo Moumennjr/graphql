@@ -81,6 +81,8 @@ function App() {
     isMarried: null,
   });
 
+  const [createdUser, setCreatedUser] = useState(null);
+
   // =========================
   // HANDLE INPUT CHANGES
   // =========================
@@ -118,7 +120,11 @@ function App() {
           age: Number(newUser.age),
           isMarried: newUser.isMarried,
         },
+        refetchQueries: [{ query: GET_USERS }],
       });
+
+      setCreatedUser(result.data.createUser);
+      setNewUser({ name: "", age: null, isMarried: null });
 
       console.log("Created user:", result.data.createUser);
     } catch (error) {
@@ -145,6 +151,15 @@ function App() {
       ========================= */}
 
       <h1>Users:</h1>
+
+      {createdUser && (
+        <div style={{ border: "1px solid green", padding: "8px", marginBottom: "12px" }}>
+          <strong>Just created:</strong>
+          <p>Name: {createdUser.name}</p>
+          <p>Age: {createdUser.age}</p>
+          <p>Civil situation: {createdUser.isMarried ? "Married" : "Single"}</p>
+        </div>
+      )}
 
       <div>
         {getUsersLoading ? (
