@@ -1,12 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
+import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client"
+import { ApolloProvider } from "@apollo/client/react"
 import './index.css'
 import App from './App.jsx'
 
 
 const client = new ApolloClient({
-  url: "http://localhost:4000/",
+  link: new HttpLink({
+    uri: "http://localhost:4000/",
+  }),
   cache: new InMemoryCache(),
 
 })
